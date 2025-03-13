@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+# this reads the data from the .env file and returns the value of the key
 def get_key(key_name):
     return os.getenv(key_name)
 
@@ -16,7 +17,4 @@ def get_project_name():
 
 def get_langsmith_v2_tracing():
     return get_key('LANGSMITH_TRACING_V2')
-
-def get_openai_llm_model_name():
-    return get_key('OPENAI_LLM_MODEL_NAME')
 
