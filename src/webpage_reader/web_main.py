@@ -1,3 +1,5 @@
+from langchain_openai import ChatOpenAI
+
 from src.webpage_reader.constants import openai_embeddings_model_name
 from src.webpage_reader.embedding import DataEmbedder
 
@@ -8,6 +10,7 @@ from src.webpage_reader.vectorstore import VectorStore
 from src.config.set_config import Config
 
 from langchain_core.prompts import ChatPromptTemplate
+from langchain.chains.combine_documents import create_stuff_documents_chain
 
 config = Config()
 if config.set():
@@ -38,6 +41,9 @@ Answer the following questions based only on the provided context:
 </context>
 """
 )
+
+document_chain=create_stuff_documents_chain(ChatOpenAI(model="gpt-4o"),prompt)
+print(document_chain)
 
 
 
