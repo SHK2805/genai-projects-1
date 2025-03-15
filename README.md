@@ -36,6 +36,7 @@ else:
 ```commandline
 ollama --version
 ```
+* Open the webpage [Ollama](http://localhost:11434/) to check if the installation is successful
 * See the list of models available in the `Ollama` website from the [Ollama Models](https://github.com/ollama/ollama?tab=readme-ov-file#model-library) page
 * Run the ollama model using the below code in the commandline
 ```commandline
