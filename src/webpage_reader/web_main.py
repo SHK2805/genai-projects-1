@@ -1,5 +1,6 @@
 from langchain_openai import ChatOpenAI
 
+from src.utils.common_utils import get_template_prompt
 from src.webpage_reader.constants import openai_embeddings_model_name
 from src.webpage_reader.embedding import DataEmbedder
 
@@ -9,7 +10,6 @@ from src.webpage_reader.vectorstore import VectorStore
 
 from src.config.set_config import Config
 
-from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains.combine_documents import create_stuff_documents_chain
 
 config = Config()
@@ -33,14 +33,7 @@ results = vectorstore.similarity_search(query)
 # print(*results, sep="\n")
 # print(results[0].page_content)
 
-prompt = ChatPromptTemplate.from_template(
-"""
-Answer the following questions based only on the provided context:
-<context>
-{context}
-</context>
-"""
-)
+prompt = get_template_prompt()
 
 document_chain=create_stuff_documents_chain(ChatOpenAI(model="gpt-4o"),prompt)
 print(document_chain)
