@@ -1,8 +1,7 @@
 from src.config.set_config import Config
-from src.readers.manager.data_manager import DataManager
+from src.readers.manager.qa_manager import QAManager
 from src.readers.manager.query_manager import QueryManager
-from src.readers.services.embedding_service import EmbeddingService
-from src.readers.services.vectorstore_service import VectorStoreService
+
 
 
 def main():
@@ -13,28 +12,19 @@ def main():
     else:
         print("Environment variables NOT set")
 
-    # File Path
-    txt_file_path = "../../data/pyramids.txt"
-    txt_faiss_db_path = "../../database/txt_vector_store"
+    # File Path and Database Path
+    file_path = "../../data/pyramids.pdf"  # Update to the desired file
+    db_base_path = "../../database/"
 
-    data_manager = DataManager(txt_file_path)
-    embedding_service = EmbeddingService()
+    # Initialize File Manager
+    qa_manager = QAManager(file_path, db_base_path)
 
-    # Save or Load Vector Store
     try:
-        # To create and save the vector store
-        documents = data_manager.process_text()
-        embeddings = embedding_service.get_embeddings()
-        vector_store_service = VectorStoreService(documents, embeddings)
-        retriever = vector_store_service.create_vector_store()
-        vector_store_service.save_vector_store(txt_faiss_db_path)
+        retriever = qa_manager.run()
 
-        # To load an existing vector store
-        retriever = vector_store_service.load_vector_store(txt_faiss_db_path, embeddings)
-
-        # Query the data
+        # Query the Data
         query_manager = QueryManager(retriever)
-        answer = query_manager.query("How many pyramids were constructed in the Kingdom of Kush?")
+        answer = query_manager.query("Where are the most famous Egyptian pyramids found ?")
         print(answer)
 
     except Exception as e:

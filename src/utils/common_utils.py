@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from uuid import uuid4
 
@@ -20,7 +21,8 @@ else:
     print("Environment variables NOT set")
 
 def get_file_extension(file_path:str):
-    return Path(file_path).suffix
+    # os.path.splitext(file_path)[1].lower()
+    return Path(file_path).suffix.lower()
 
 def get_document_map():
     return {

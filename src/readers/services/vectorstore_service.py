@@ -1,3 +1,6 @@
+import os
+import shutil
+
 from langchain_community.vectorstores import FAISS
 
 class VectorStoreService:
@@ -15,6 +18,10 @@ class VectorStoreService:
 
     def save_vector_store(self, file_path):
         if self.vector_store:
+            # delete the existing folder if it exists
+            if os.path.exists(file_path):
+                shutil.rmtree(file_path)
+                print(f"Deleted existing FAISS database at: {file_path}")
             self.vector_store.save_local(file_path)
             print(f"FAISS database saved to: {file_path}")
         else:
