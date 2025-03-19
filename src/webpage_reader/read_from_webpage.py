@@ -1,5 +1,5 @@
 from src.config.set_config import Config
-from src.utils.common_utils import get_message_prompt, get_combined_chain
+from src.utils.common_utils import get_combined_chain
 from src.webpage_reader.constants import *
 
 config = Config()
@@ -10,10 +10,8 @@ else:
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import WebBaseLoader
-from langchain_openai import ChatOpenAI
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains import create_retrieval_chain
 
 class WebPageQA:
