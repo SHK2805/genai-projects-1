@@ -1,5 +1,5 @@
 from src.config.set_config import Config
-from src.constants import ollama_llm_model_name, ollama_embeddings_model_name
+from src.constants import *
 from src.readers.manager.query_manager import QueryManager
 from src.readers.manager.vectorstore_manager import VectorStoreManager
 from src.readers.platforms.paltform_types import PlatformTypes
@@ -24,13 +24,18 @@ def main():
     try:
         # Ollama
         # Initialize PlatformManager for Ollama
-        platform_manager_ollama = PlatformManager(PlatformTypes.OLLAMA)
-        ollama_llm = platform_manager_ollama.get_llm(ollama_llm_model_name)
-        ollama_embedding = platform_manager_ollama.get_embedding(ollama_embeddings_model_name)
+        platform_manager = PlatformManager(PlatformTypes.OPENAI)
+        llm = platform_manager.get_llm(openai_llm_model_name)
+        embedding = platform_manager.get_embedding(openai_embeddings_model_name)
+
+        hf_platform_manager = PlatformManager(PlatformTypes.HUGGINGFACE)
+        hf_embedding = hf_platform_manager.get_embedding(hf_embeddings_model_name)
+
+
 
 
         # Get the retriever from QAManager
-        retriever = vectorstore_manager.get_retriever(embeddings=ollama_embedding)
+        retriever = vectorstore_manager.get_retriever(embeddings=embedding)
 
         # Initialize QueryManager with the retriever
         query_manager = QueryManager(retriever)
@@ -39,7 +44,7 @@ def main():
         question = "Where are the most famous Egyptian pyramids found?"
         answer = query_manager.query(
             question=question,
-            llm=ollama_llm
+            llm=llm
         )
 
         # Print the result

@@ -5,6 +5,7 @@ langchain-openai
 langchain-ollama
 langchain_huggingface
 langchain-community
+sentence-transformers
 langchain-text-splitters
 bs4
 faiss-cpu

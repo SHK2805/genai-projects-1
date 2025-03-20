@@ -1,6 +1,6 @@
 from src.utils.project_environment.envs import *
 
-# this gets the key-values from the .env file and set the environment
+# this gets the key-values from the .env file and sets the environment
 class Config:
     def __init__(self):
         self.openai_api_key = get_open_ai_key()
