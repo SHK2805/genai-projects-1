@@ -1,5 +1,3 @@
-from src.readers.platforms.platform_manager import hf_embedding
-
 openai_llm_model_name:str="o3-mini"
 openai_embeddings_model_name:str="text-embedding-ada-002"
 

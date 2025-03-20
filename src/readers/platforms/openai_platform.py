@@ -1,5 +1,4 @@
-from langchain.llms import ChatOpenAI
-from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
 from src.readers.platforms.base_platform import BaseLLM, BaseEmbedding
 

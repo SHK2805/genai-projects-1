@@ -39,7 +39,7 @@ class PlatformManager:
         return self.embedding_instance.get_embeddings(embedding_name)
 
 
-
+"""
 # Usage
 # Initialize PlatformManager for OpenAI
 platform_manager = PlatformManager(PlatformTypes.OPENAI)
@@ -55,4 +55,4 @@ hf_embedding = platform_manager_hf.get_embedding("huggingface-embedding-name")
 platform_manager_ollama = PlatformManager(PlatformTypes.OLLAMA)
 ollama_llm = platform_manager_ollama.get_llm("ollama-llm-name")
 ollama_embedding = platform_manager_ollama.get_embedding("ollama-embedding-name")
-
+"""
