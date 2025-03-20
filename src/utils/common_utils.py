@@ -86,16 +86,11 @@ def get_ollama_llm_model(llm_model_name = ollama_llm_model_name):
 def get_uuids(docs_len):
     return [str(uuid4()) for _ in range(docs_len) if docs_len > 0]
 
-def get_combined_chain(llm_model_name, model_service, prompt=None):
+def get_combined_chain(llm, prompt=get_message_prompt()):
     """Creates a combined chain using the specified LLM model and prompt."""
-    if prompt is None:
-        prompt = get_message_prompt()
+    if llm is None:
+        raise ValueError("LLM model cannot be None")
 
-    # Use ModelService to fetch the LLM model
-    if model_service is None:
-        raise ValueError("Model service is required.")
-
-    llm = model_service.get_llm_model(model_name=llm_model_name)
     combine_docs_chain = create_stuff_documents_chain(llm, prompt)
     return combine_docs_chain
 

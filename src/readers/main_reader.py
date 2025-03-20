@@ -1,10 +1,9 @@
 from src.config.set_config import Config
-from src.constants import ollama_embeddings_model_name, ollama_llm_model_name
-from src.readers.manager.qa_manager import QAManager
+from src.constants import ollama_llm_model_name, ollama_embeddings_model_name
 from src.readers.manager.query_manager import QueryManager
-from src.readers.services.llm_service import LLMModelService
-from src.utils.qaenum.embedding_type import EmbeddingTypes
-from src.utils.qaenum.model_type import LLMTypes
+from src.readers.manager.vectorstore_manager import VectorStoreManager
+from src.readers.platforms.paltform_types import PlatformTypes
+from src.readers.platforms.platform_manager import PlatformManager
 
 
 def main():
@@ -19,28 +18,37 @@ def main():
     file_path = "../../data/pyramids.txt"  # Update to the desired file
     db_base_path = "../../database/"
 
-
-    # Initialize File Manager
-    qa_manager = QAManager(file_path, db_base_path)
+    # Initialize QAManager for file processing and retriever creation
+    vectorstore_manager = VectorStoreManager(file_path, db_base_path)
 
     try:
-        embeddings_model_name = ollama_embeddings_model_name
-        embeddings_model_type = EmbeddingTypes.OLLAMA
-        retriever = qa_manager.get_retriever(embeddings_model_name=embeddings_model_name, embeddings_model_type=embeddings_model_type)
+        # Ollama
+        # Initialize PlatformManager for Ollama
+        platform_manager_ollama = PlatformManager(PlatformTypes.OLLAMA)
+        ollama_llm = platform_manager_ollama.get_llm(ollama_llm_model_name)
+        ollama_embedding = platform_manager_ollama.get_embedding(ollama_embeddings_model_name)
 
-        # Query the Data
-        llm_model_name = ollama_llm_model_name
-        llm_model_type = LLMTypes.OLLAMA
-        llm_model_service = LLMModelService(llm_model_type)
+
+        # Get the retriever from QAManager
+        retriever = vectorstore_manager.get_retriever(embeddings=ollama_embedding)
+
+        # Initialize QueryManager with the retriever
         query_manager = QueryManager(retriever)
-        answer = query_manager.query("Where are the most famous Egyptian pyramids found ?",
-                                     None,
-                                     llm_model_name,
-                                     llm_model_service)
-        print(answer)
+
+        # Query the data using QueryManager
+        question = "Where are the most famous Egyptian pyramids found?"
+        answer = query_manager.query(
+            question=question,
+            llm=ollama_llm
+        )
+
+        # Print the result
+        print(f"Question: {question}")
+        print(f"Answer: {answer}")
 
     except Exception as e:
         print(f"Error: {e}")
+
 
 if __name__ == "__main__":
     main()

@@ -18,3 +18,6 @@ def get_project_name():
 def get_langsmith_v2_tracing():
     return get_key('LANGSMITH_TRACING_V2')
 
+def get_huggingface_access_token():
+    return get_key('HF_TOKEN')
+
