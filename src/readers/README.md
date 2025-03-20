@@ -8,3 +8,6 @@
 * Store the vectors in a database for efficient retrieval
 * Query the database to retrieve relevant information
 * Display the summary or the query results
+
+### Code
+* The embeddings and the model are defined in `QAManager` class

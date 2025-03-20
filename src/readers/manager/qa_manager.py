@@ -1,9 +1,11 @@
 import os
 
+from src.constants import ollama_embeddings_model_name
 from src.readers.manager.data_manager import DataManager
 from src.readers.services.embedding_service import EmbeddingService
 from src.readers.services.vectorstore_service import VectorStoreService
 from src.utils.common_utils import get_file_extension
+from src.utils.qaenum.embedding_type import EmbeddingTypes
 
 
 class QAManager:
@@ -20,7 +22,9 @@ class QAManager:
         data_manager = DataManager(self.file_path)
         return data_manager.process_text()
 
-    def run(self):
+    def get_retriever(self,
+            embeddings_model_name=ollama_embeddings_model_name,
+            embeddings_model_type=EmbeddingTypes.OLLAMA):
 
         # Determine a database path based on a file type
         file_extension = get_file_extension(self.file_path).lstrip('.')
@@ -32,7 +36,7 @@ class QAManager:
 
             # Get Embeddings
             embedding_service = EmbeddingService()
-            embeddings = embedding_service.get_embeddings()
+            embeddings = embedding_service.get_embeddings_model(model_name=embeddings_model_name, model_type=embeddings_model_type)
 
             # Save or Load Vector Store
             vector_store_service = VectorStoreService(documents, embeddings)
