@@ -14,6 +14,41 @@ else:
     print("Environment variables NOT set")
 ```
 
+### Projects List
+#### 1. Webpage Reader
+* The `Webpage Reader` project reads the text from a webpage, stores it in a vectordb
+* Users can query the vectordb
+* The code is written in `src/webpage_reader`
+
+#### 2. Readers
+* The `Readers` project reads the text from a file txt or pdf, stores it in a vectordb
+* Users can query the vectordb
+* The code is written in `src/readers`
+* The data for this is stored in the `data` folder
+* The database files are stored in the `database` folder
+* The structure of the code is split
+```plaintext
+root/
+├── data/
+│   ├── file.txt
+│   └── file.pdf
+├── database/
+│   ├── txt_vector_store/
+│   └── pdf_vector_store/
+├── src/
+│   ├── config/
+│   ├── constants/
+│   ├── readers/
+│   │   ├── manager/
+│   │   ├── platforms/
+│   │   ├── services/
+│   │   └── main_reader.py
+│   └── utils/
+├── main.py
+└── README.md
+```
+* The `platforms` folder contains code to manage various platforms like OPENAI, HuggingFace, Ollama
+
 
 ### Ollama
 #### Installation
