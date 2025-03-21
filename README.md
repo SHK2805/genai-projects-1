@@ -3,6 +3,7 @@
 ### Setup
 * Run the `main.py` file to start the program
 * Set the environment variables from the `.env` file at the start of the program
+  * This contains the `API_KEY` for the OPENAI platform, ollama, huggingface. 
 * Add the below at the beginning of the file you are running the program from
 ```python
 from src.config.set_config import Config
@@ -21,7 +22,10 @@ else:
 * The code is written in `src/webpage_reader`
 
 #### 2. Readers
-* The `Readers` project reads the text from a file txt or pdf, stores it in a vectordb
+* At the moment the `Readers` project reads the text from a file txt or PDF, stores it in a vectordb
+* This can be extended to reading from other sources like webpage, images, audio, video, etc.
+* Refer to the `Webpage Reader` section for more details
+* The `Readers` project reads the text from a file txt or PDF, stores it in a vectordb
 * Users can query the vectordb
 * The code is written in `src/readers`
 * The data for this is stored in the `data` folder
@@ -48,6 +52,22 @@ root/
 └── README.md
 ```
 * The `platforms` folder contains code to manage various platforms like OPENAI, HuggingFace, Ollama
+* The application takes the file name and the platform name as input in `main_reader.py` 
+* Below is the sample code
+```python
+file_path = "../../data/pyramids.txt"  # Update to the desired file
+db_base_path = "../../database/"
+
+# Initialize QAManager for file processing and retriever creation
+vectorstore_manager = VectorStoreManager(file_path, db_base_path)
+
+# Ollama
+# Initialize PlatformManager for Ollama
+platform_manager = PlatformManager(PlatformTypes.OPENAI)
+llm = platform_manager.get_llm(openai_llm_model_name)
+embedding = platform_manager.get_embedding(openai_embeddings_model_name)
+```
+* The data is then embedded and stored under the folder `database` using which the user can query the data
 
 
 ### Ollama
