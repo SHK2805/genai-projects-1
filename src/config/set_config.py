@@ -16,6 +16,7 @@ class Config:
             os.environ['LANGCHAIN_PROJECT'] = self.project_name
             os.environ['LANGSMITH_TRACING_V2'] = self.langsmith_v2_tracing
             os.environ['HF_TOKEN'] = self.huggingface_access_token
+            os.environ["USER_AGENT"] = "GenAI Projects 1.0"
         except Exception as e:
             print(f'Error setting environment variables: {e}')
             return False

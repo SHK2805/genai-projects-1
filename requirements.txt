@@ -10,3 +10,7 @@ langchain-text-splitters
 bs4
 faiss-cpu
 pypdf
+wikipedia
+arxiv
+pydantic
+pathlib

@@ -15,7 +15,7 @@ from langchain_community.vectorstores import FAISS
 from langchain.chains import create_retrieval_chain
 
 class WebPageQA:
-    def __init__(self, url = "https://apnews.com/article/trump-putin-call-ceasefire-russia-ukraine-zelenskyy-0d2ca5b69761082979dd9836932ae84f",
+    def __init__(self, url = "https://en.wikipedia.org/wiki/Legendary_creature",
                  llm_model_name = openai_llm_model_name,
                  embeddings_model_name = openai_embeddings_model_name):
         self.url = url
@@ -45,7 +45,7 @@ class WebPageQA:
 
     def run(self):
         retriever = self.init()
-        answer = self.ask(retriever, "When is Trump holding talks with Putin?")
+        answer = self.ask(retriever, "What is a legendary creature?")
         print(answer)
 
 if __name__ == "__main__":
