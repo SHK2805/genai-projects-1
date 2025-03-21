@@ -1,5 +1,5 @@
 from langchain import hub
-from langchain.agents import create_openai_tools_agent, AgentExecutor
+from langchain.agents import create_openai_tools_agent, AgentExecutor, create_react_agent
 from langchain_community.tools import ArxivQueryRun, WikipediaQueryRun
 from langchain_community.utilities import ArxivAPIWrapper, WikipediaAPIWrapper
 from langchain_openai import ChatOpenAI
@@ -42,7 +42,21 @@ if __name__ == "__main__":
     agent = create_openai_tools_agent(llm, tools, prompt)
 
     executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
-    # response = executor.invoke({"input": "What is a Phoenix?"}) # fetches from our custom tool retriever
-    response = executor.invoke({"input": "1706.03762"}) # fetches from arxiv
-    print(response['output'])
+    response = executor.invoke({"input": "What is a Phoenix?"}) # fetches from our custom tool retriever
+    # response = executor.invoke({"input": "1706.03762"}) # fetches from arxiv
+    # response = executor.invoke({"input": "What is artificial intelligence?"}) # fetches from wikipedia
+    # print(f"Response: {response['output']}")
+
+    # ReAct
+    # Get the prompt to use
+    react_prompt = hub.pull("hwchase17/react")
+    # Construct the ReAct agent
+    react_agent = create_react_agent(llm, tools, react_prompt)
+    # Create an agent executor by passing in the agent and tools
+    react_agent_executor = AgentExecutor(agent=react_agent, tools=tools, verbose=True)
+    # Invoke the agent executor with an input
+    react_response = react_agent_executor.invoke({"input": "What is a Phoenix?"})
+    # Print the response
+    print(f"ReAct response: {react_response['output']}")
+
 
