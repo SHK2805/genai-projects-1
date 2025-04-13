@@ -22,19 +22,12 @@ def main():
     vectorstore_manager = VectorStoreManager(file_path, db_base_path)
 
     try:
-        # Ollama
-        # Initialize PlatformManager for Ollama
+        # Initialize PlatformManager
         platform_manager = PlatformManager(PlatformTypes.OPENAI)
         llm = platform_manager.get_llm(openai_llm_model_name)
         embedding = platform_manager.get_embedding(openai_embeddings_model_name)
 
-        hf_platform_manager = PlatformManager(PlatformTypes.HUGGINGFACE)
-        hf_embedding = hf_platform_manager.get_embedding(hf_embeddings_model_name)
-
-
-
-
-        # Get the retriever from QAManager
+        # Get the retriever Vectorstore
         retriever = vectorstore_manager.get_retriever(embeddings=embedding)
 
         # Initialize QueryManager with the retriever
